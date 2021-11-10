@@ -1,0 +1,5 @@
+---
+# defaults file for install_vsftpd
+vsftpd_allow_anon: "NO" # YES/NO
+vsftpd_anon_home_dir: "/var/ftp/pub"
+vsftpd_anon_upload_dir: "/var/ftp/pub/upload"

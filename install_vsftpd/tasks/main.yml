@@ -1,0 +1,58 @@
+---
+# tasks file for install_vsftpd
+- name: Upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+
+- name: Install vsftpd
+  yum:
+    name: vsftpd
+    state: present
+
+- name: Enable and start vsftpd service
+  systemd:
+    name: vsftpd
+    state: started
+    enabled: yes
+
+block: ## IF vsftpd_allow_anon YES
+  - name: Create anon home {{ vsftpd_anon_home_dir }}
+    file:
+      path: "{{ vsftpd_anon_home_dir }}"
+      mode: "0755"
+      state: directory
+  
+  - name: Create anon upload dir {{ vsftpd_anon_upload_dir }}
+    file:
+      path: "{{ vsftpd_anon_upload_dir }}"
+      mode: "0755"
+      owner: "ftp"
+      state: directory
+  
+  - name: Configure SELinux
+    command: "setsebool -P allow_ftpd_full_access on"
+when: vsftpd_allow_anon == "YES"
+
+- name: Configure file /etc/vsftpd/vsftpd.conf
+  template: 
+    dest: "/etc/vsftpd/vsftpd.conf"
+    src: "vsftpd.j2"
+    owner: root
+    group: root
+  notify:
+    - Restart_vsftpd
+
+- name: Configure SELinux
+    command: "setsebool -P allow_ftpd_full_access off"
+  when: vsftpd_allow_anon == "NO"
+
+# FIREWALLD
+- name: Allow FTP
+  firewalld:
+    service: ftp
+    permanent: yes
+    state: enabled
+  notify:
+    - Restart_firewalld
+    - Enable_firewalld

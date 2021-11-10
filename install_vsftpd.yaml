@@ -1,0 +1,10 @@
+---
+- name: Install vsftpd
+  hosts: httpd_hosts
+  become: true
+
+  vars:
+    vsftpd_allow_anon: "YES" # YES/NO
+
+  roles:
+    - install_vsftpd

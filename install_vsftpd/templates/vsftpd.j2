@@ -1,0 +1,24 @@
+anonymous_enable={{ vsftpd_allow_anon }}
+no_anon_password={{ vsftpd_allow_anon }}
+anon_root={{ vsftpd_anon_home_dir }}
+anon_upload_enable={{ vsftpd_allow_anon }}
+anon_mkdir_write_enable={{ vsftpd_allow_anon }}
+anon_other_write_enable={{ vsftpd_allow_anon }}
+anon_umask=022
+
+local_enable=YES
+write_enable=YES
+local_umask=022
+
+chroot_local_user=YES
+chroot_list_enable=NO
+
+dirmessage_enable=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+listen=NO
+listen_ipv6=YES
+pam_service_name=vsftpd
+#userlist_enable=YES
+
+vsftpd_log_file=/var/log/vsftpd.log
