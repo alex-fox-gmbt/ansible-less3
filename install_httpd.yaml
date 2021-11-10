@@ -1,0 +1,7 @@
+---
+- name: Install httpd
+  hosts: httpd_hosts
+  become: true
+
+  roles:
+    - install_httpd

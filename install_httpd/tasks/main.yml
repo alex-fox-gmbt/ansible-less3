@@ -1,0 +1,24 @@
+---
+# tasks file for install_httpd
+- name: Install and start Apache for {{ ansible_distribution }}
+  include_tasks: "httpd_for_{{ ansible_distribution }}.yml"
+  when: ansible_distribution == "CentOS"
+    
+- name: Create file /var/www/html/index.html with hostname
+  template: 
+    dest: "/var/www/html/index.html"
+    src: "index.html"
+    mode: "0644"
+    owner: root
+    group: root
+
+
+# FIREWALLD
+- name: Allow HTTP
+  firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+  notify:
+    - Restart_firewalld
+    - Enable_firewalld

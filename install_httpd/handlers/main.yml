@@ -1,0 +1,12 @@
+---
+# handlers file for install_httpd
+- name: Restart_firewalld
+  systemd:
+    name: firewalld
+    state: restarted
+    enabled: yes
+
+- name: Enable_firewalld
+  systemd:
+    name: firewalld
+    enabled: yes

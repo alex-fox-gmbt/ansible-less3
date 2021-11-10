@@ -1,0 +1,13 @@
+[httpd_hosts]
+cent-node1
+cent-node2
+
+[httpd_hosts:vars]
+ansible_user=ansible
+ansible_connection=ssh
+
+[cent-node1]
+cent-node1
+
+[cent-node2]
+cent-node2
