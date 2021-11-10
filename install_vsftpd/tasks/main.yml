@@ -44,7 +44,7 @@
     - Restart_vsftpd
 
 - name: Configure SELinux
-    command: "setsebool -P allow_ftpd_full_access off"
+  command: "setsebool -P allow_ftpd_full_access off"
   when: vsftpd_allow_anon == "NO"
 
 # FIREWALLD
