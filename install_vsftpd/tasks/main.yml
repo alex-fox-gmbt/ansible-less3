@@ -16,23 +16,23 @@
     state: started
     enabled: yes
 
-block: ## IF vsftpd_allow_anon YES
-  - name: Create anon home {{ vsftpd_anon_home_dir }}
-    file:
-      path: "{{ vsftpd_anon_home_dir }}"
-      mode: "0755"
-      state: directory
-  
-  - name: Create anon upload dir {{ vsftpd_anon_upload_dir }}
-    file:
-      path: "{{ vsftpd_anon_upload_dir }}"
-      mode: "0755"
-      owner: "ftp"
-      state: directory
-  
-  - name: Configure SELinux
-    command: "setsebool -P allow_ftpd_full_access on"
-when: vsftpd_allow_anon == "YES"
+- block: ## IF vsftpd_allow_anon YES
+    - name: Create anon home {{ vsftpd_anon_home_dir }}
+      file:
+        path: "{{ vsftpd_anon_home_dir }}"
+        mode: "0755"
+        state: directory
+    
+    - name: Create anon upload dir {{ vsftpd_anon_upload_dir }}
+      file:
+        path: "{{ vsftpd_anon_upload_dir }}"
+        mode: "0755"
+        owner: "ftp"
+        state: directory
+    
+    - name: Configure SELinux
+      command: "setsebool -P allow_ftpd_full_access on"
+  when: vsftpd_allow_anon == "YES"
 
 - name: Configure file /etc/vsftpd/vsftpd.conf
   template: 
